@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/bcgov/sso-playground-bcsc
+  tag: main
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: gh-registry-config
+
+nameOverride: sso-playground
+fullnameOverride: sso-playground
+
+service:
+  type: ClusterIP
+  port: 8080
+
+route:
+  host: sso-playground.apps.silver.devops.gov.bc.ca
+
+env:
+  NEXT_PUBLIC_REDIRECT_URI: https://sso-playground.apps.silver.devops.gov.bc.ca
+
+resources:
+  limits:
+    cpu: 50m
+    memory: 128Mi
+  requests:
+    cpu: 10m
+    memory: 64Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
