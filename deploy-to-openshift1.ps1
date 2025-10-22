@@ -46,7 +46,8 @@ oc set volume deployment/sso-playground --add --name=serving-cert --type=secret 
 # 3. map port 8443 to 8443 in the service
 oc patch svc/sso-playground --type='json' -p="[{'op': 'add', 'path': '/spec/ports/-', 'value': {'name': '8443-tcp', 'port': 8443, 'targetPort': 8443, 'protocol': 'TCP'}}]"
 oc create route reencrypt sso-playground --service=sso-playground --port=8443-tcp --insecure-policy=Redirect -n jackie
-
+# The above https re-encrypt route does not work yet. The best solution is to put Nginx in front of the app to handle https.
+# TODO
 
 oc get route sso-playground -n jackie -o jsonpath="{.spec.host}{'\n'}"
 oc get endpoints sso-playground -n jackie
